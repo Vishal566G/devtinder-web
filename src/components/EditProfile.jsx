@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,10 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user.age);
   const [about, setAbout] = useState(user.about);
   const [gender, setGender] = useState(user.gender);
-  const [photoURL, setPhotoURL] = useState(user.photoURL);
+  const [photoURL, setPhotoURL] = useState(
+    user.photoURL ||
+      "https://images.pexels.com/photos/34392738/pexels-photo-34392738.jpeg"
+  );
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
