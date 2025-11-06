@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 export const Login = () => {
-  const [emailId, setEmailId] = useState("chandan@gmail.com");
-  const [password, setPassword] = useState("Chandan@123");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,10 +32,48 @@ export const Login = () => {
     }
   };
 
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+      console.log(res.data);
+      dispatch(addUser(res.data.data));
+      return navigate("/profile");
+    } catch (err) {
+      setError(err?.response?.data || "Something went wrong");
+    }
+  };
+
   return (
     <div className="flex justify-center my-10">
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-        <legend className="fieldset-legend">Login</legend>
+        <legend className="fieldset-legend">
+          {isLoginForm ? "Login" : "Sign Up"}
+        </legend>
+        {!isLoginForm && (
+          <>
+            <label className="label">First Name</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+
+            <label className="label">Last Name</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </>
+        )}
 
         <label className="label">Email</label>
         <input
@@ -54,9 +95,18 @@ export const Login = () => {
 
         <p className="text-red-600 text-lg">{error}</p>
 
-        <button className="btn btn-neutral mt-4" onClick={handleLoginClick}>
-          Login
+        <button
+          className="btn btn-neutral mt-4"
+          onClick={isLoginForm ? handleLoginClick : handleSignUp}
+        >
+          {isLoginForm ? "Login" : "Sign Up"}
         </button>
+        <p
+          className="cursor-pointer m-auto py-2"
+          onClick={() => setIsLoginForm((value) => !value)}
+        >
+          {isLoginForm ? "New User? Sign Up Here" : "Existing User? Login Here"}
+        </p>
       </fieldset>
     </div>
   );

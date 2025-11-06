@@ -4,17 +4,15 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_SVG } from "../utils/constants";
 
 const EditProfile = ({ user }) => {
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [age, setAge] = useState(user.age);
-  const [about, setAbout] = useState(user.about);
-  const [gender, setGender] = useState(user.gender);
-  const [photoURL, setPhotoURL] = useState(
-    user.photoURL ||
-      "https://images.pexels.com/photos/34392738/pexels-photo-34392738.jpeg"
-  );
+  const [firstName, setFirstName] = useState(user.firstName || "");
+  const [lastName, setLastName] = useState(user.lastName || "");
+  const [age, setAge] = useState(user.age || "");
+  const [about, setAbout] = useState(user.about || "");
+  const [gender, setGender] = useState(user.gender || "");
+  const [photoURL, setPhotoURL] = useState(user.photoURL || USER_SVG);
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
@@ -28,7 +26,6 @@ const EditProfile = ({ user }) => {
         { withCredentials: true }
       );
 
-      // console.log(res?.data?.data);
       dispatch(addUser(res.data.data));
       setShowToast(true);
       setTimeout(() => {

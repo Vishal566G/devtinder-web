@@ -13,14 +13,12 @@ const Connections = () => {
       const res = await axios.get(BASE_URL + "/user/connections", {
         withCredentials: true,
       });
-      //   console.log(res?.data?.data);
       dispatch(addConnections(res?.data?.data));
     } catch (err) {
       console.error(err);
     }
   };
 
-  console.log(connections);
 
   useEffect(() => {
     fetchConnections();
@@ -28,7 +26,12 @@ const Connections = () => {
 
   if (!connections) return;
 
-  if (connections.length === 0) return <h1>No Connections Found</h1>;
+  if (connections.length === 0)
+    return (
+      <h1 className="flex justify-center my-20 font-semibold text-2xl">
+        No Connections Found
+      </h1>
+    );
 
   return (
     <div className="text-center my-10">
