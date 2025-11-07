@@ -1,9 +1,6 @@
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { removeUserfromFeed } from "../utils/feedSlice";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, showActions = true }) => {
   const { firstName, lastName, age, gender, about, photoURL, _id } = user;
   const dispatch = useDispatch();
 
@@ -12,9 +9,7 @@ const UserCard = ({ user }) => {
       const res = await axios.post(
         BASE_URL + "/request/send/" + status + "/" + userId,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       dispatch(removeUserfromFeed(userId));
     } catch (err) {
@@ -34,22 +29,32 @@ const UserCard = ({ user }) => {
 
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName}</h2>
-        {age && gender && <p>{age + ", " + gender}</p>}
+
+        {age && gender && (
+          <p>
+            {age}, {gender.charAt(0).toUpperCase() + gender.slice(1)}
+          </p>
+        )}
+
         <p className="line-clamp-3">{about}</p>
-        <div className="card-actions justify-between my-4">
-          <button
-            className="btn btn-primary"
-            onClick={() => handleSendRequest("ignored", _id)}
-          >
-            Ignore
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => handleSendRequest("interested", _id)}
-          >
-            Interested
-          </button>
-        </div>
+
+        {/* ✅ Render action buttons ONLY if showActions === true */}
+        {showActions && (
+          <div className="card-actions justify-between my-4">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleSendRequest("ignored", _id)}
+            >
+              Ignore
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => handleSendRequest("interested", _id)}
+            >
+              Interested
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

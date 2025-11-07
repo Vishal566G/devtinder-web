@@ -19,7 +19,6 @@ const Connections = () => {
     }
   };
 
-
   useEffect(() => {
     fetchConnections();
   }, []);
@@ -36,6 +35,7 @@ const Connections = () => {
   return (
     <div className="text-center my-10">
       <h1 className="text-3xl font-bold">Connections</h1>
+
       {connections.map((connection) => {
         const { firstName, lastName, age, gender, photoURL, _id, about } =
           connection;
@@ -43,21 +43,30 @@ const Connections = () => {
         return (
           <div
             key={_id}
-            className="flex m-4 p-4 rounded-lg bg-base-200 w-1/2 mx-auto"
+            className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 m-4 p-4 rounded-lg bg-base-200 w-[90%] sm:w-[70%] lg:w-[50%] mx-auto"
           >
-            <div>
+            {/* LEFT — IMAGE */}
+            <div className="flex-shrink-0">
               <img
-                className="w-20 h-20 rounded-full"
+                className="w-20 h-20 rounded-full object-cover"
                 alt="photo"
                 src={photoURL}
-              ></img>
+              />
             </div>
-            <div className="text-left mx-4">
+
+            {/* MIDDLE — USER INFO */}
+            <div className="flex-1 text-center sm:text-left">
               <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
+                {firstName} {lastName}
               </h2>
-              {age && gender && <p>{age + " " + gender}</p>}
-              <p>{about}</p>
+
+              {age && gender && (
+                <p className="text-sm opacity-70">
+                  {age}, {gender.charAt(0).toUpperCase() + gender.slice(1)}
+                </p>
+              )}
+
+              <p className="text-sm">{about}</p>
             </div>
           </div>
         );

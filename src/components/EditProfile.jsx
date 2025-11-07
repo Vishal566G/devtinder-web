@@ -82,12 +82,18 @@ const EditProfile = ({ user }) => {
               placeholder="About"
             ></textarea>
             <label className="label">Gender</label>
-            <input
-              type="text"
-              className="input"
+            <select
+              className="select"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
-            />
+            >
+              <option value="" disabled>
+                Select gender
+              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Others</option>
+            </select>
 
             {error && <p className="text-red-600 text-lg">{error}</p>}
 
@@ -98,6 +104,7 @@ const EditProfile = ({ user }) => {
         </div>
         <UserCard
           user={{ firstName, lastName, age, gender, about, photoURL }}
+          showActions={false}
         />
       </div>
       {showToast && (

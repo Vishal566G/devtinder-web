@@ -55,31 +55,45 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className="flex justify-between items-center m-4 p-4 rounded-lg bg-base-200 w-2/3 mx-auto"
+            className="flex flex-col sm:flex-row items-center sm:items-center justify-between gap-4 m-4 p-4 rounded-lg bg-base-200 w-[90%] sm:w-[80%] mx-auto"
           >
-            <div>
+            {/* LEFT — IMAGE */}
+            <div className="flex-shrink-0">
               <img
-                className="w-20 h-20 rounded-full"
+                className="w-20 h-20 rounded-full object-cover"
                 alt="photo"
                 src={photoURL}
-              ></img>
+              />
             </div>
-            <div className="text-left mx-4">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
+
+            {/* MIDDLE — USER INFO */}
+            <div className="flex-1 text-center sm:text-left flex flex-col justify-center overflow-hidden">
+              <h2 className="font-bold text-xl truncate">
+                {firstName} {lastName}
               </h2>
-              {age && gender && <p>{age + " " + gender}</p>}
-              <p>{about}</p>
+
+              {age && gender && (
+                <p className="text-sm opacity-70">
+                  {age}, {gender.charAt(0).toUpperCase() + gender.slice(1)}
+                </p>
+              )}
+
+              <p className="text-sm text-wrap break-words line-clamp-none">
+                {about}
+              </p>
             </div>
-            <div>
+
+            {/* RIGHT — BUTTONS */}
+            <div className="flex flex-row sm:flex-col gap-3 sm:gap-2">
               <button
-                className="btn btn-primary"
+                className="btn btn-primary btn-sm sm:btn-md"
                 onClick={() => reviewRequest("rejected", request._id)}
               >
                 Reject
               </button>
+
               <button
-                className="btn btn-secondary"
+                className="btn btn-secondary btn-sm sm:btn-md"
                 onClick={() => reviewRequest("accepted", request._id)}
               >
                 Accept
