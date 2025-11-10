@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useDispatch } from "react-redux";
 
 const UserCard = ({ user, showActions = true }) => {
