@@ -6,8 +6,6 @@ const UserCard = ({ user, showActions = true }) => {
   const { firstName, lastName, age, gender, about, photoURL, _id } = user;
   const dispatch = useDispatch();
 
-  // Base Url import done
-
   const handleSendRequest = async (status, userId) => {
     try {
       const res = await axios.post(
