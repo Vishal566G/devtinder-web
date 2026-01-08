@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
+import Hide from "../utils/Hide.svg";
+import Show from "../utils/Show.svg";
 
 export const Login = () => {
   const [emailId, setEmailId] = useState("");
@@ -12,6 +14,7 @@ export const Login = () => {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -85,13 +88,26 @@ export const Login = () => {
         />
 
         <label className="label">Password</label>
-        <input
-          type="text"
-          className="input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            className="input w-full pr-12"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <span
+            className="absolute right-3 top-3 cursor-pointer"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            <img
+              src={showPassword ? Hide : Show}
+              alt="toggle password"
+              className="w-6 h-6"
+            />
+          </span>
+        </div>
 
         <p className="text-red-600 text-lg">{error}</p>
 
