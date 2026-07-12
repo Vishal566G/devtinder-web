@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
@@ -43,9 +44,8 @@ const Connections = () => {
         return (
           <div
             key={_id}
-            className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 m-4 p-4 rounded-lg bg-base-200 w-[90%] sm:w-[70%] lg:w-[50%] mx-auto"
+            className="flex flex-col sm:flex-row items-center sm:items-stretch justify-between gap-4 m-4 p-4 rounded-lg bg-base-200 w-[90%] sm:w-[70%] lg:w-[50%] mx-auto"
           >
-            {/* LEFT — IMAGE */}
             <div className="flex-shrink-0">
               <img
                 className="w-20 h-20 rounded-full object-cover"
@@ -54,7 +54,6 @@ const Connections = () => {
               />
             </div>
 
-            {/* MIDDLE — USER INFO */}
             <div className="flex-1 text-center sm:text-left">
               <h2 className="font-bold text-xl">
                 {firstName} {lastName}
@@ -67,6 +66,12 @@ const Connections = () => {
               )}
 
               <p className="text-sm">{about}</p>
+            </div>
+
+            <div className="flex items-center justify-center sm:justify-end">
+              <Link to={"/chat/" + _id}>
+                <button className="btn btn-primary">Chat</button>
+              </Link>
             </div>
           </div>
         );
