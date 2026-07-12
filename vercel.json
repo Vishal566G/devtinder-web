@@ -3,6 +3,7 @@
     {
       "source": "/api/:path*",
       "destination": "https://api.tinderfordev.in/:path*"
-    }
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
